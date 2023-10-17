@@ -144,7 +144,7 @@ export class AppComponent {
 
     //game over
     if (this.isGameOver) {
-      context?.fillText('GAME OVER!', 20 , 100);
+      context?.fillText('GAME OVER!', 20 , 120);
     }
   };
 
