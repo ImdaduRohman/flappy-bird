@@ -140,11 +140,11 @@ export class AppComponent {
     // score
     context.fillStyle = "white";
     context.font = '20px sans-serif';
-    context?.fillText(this.score.toString(), 20, 45);
+    context?.fillText(this.score.toString(), 20, 85);
 
     //game over
     if (this.isGameOver) {
-      context?.fillText('GAME OVER!', 20 , 75);
+      context?.fillText('GAME OVER!', 20 , 100);
     }
   };
 
