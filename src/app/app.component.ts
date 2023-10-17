@@ -59,6 +59,10 @@ export class AppComponent {
     }
   };
 
+  handleClick() {
+    this.moveBird();
+  }
+
   createCanvas() {
     const canvas: HTMLCanvasElement = this.myCanvas.nativeElement;
     const context = canvas.getContext('2d');
@@ -75,8 +79,6 @@ export class AppComponent {
           this.bird.height
         );
       };
-      this.pipeImageTop.src = '../assets/toppipe.png';
-      this.pipeImageBottom.src = '../assets/bottompipe.png';
       requestAnimationFrame(() => this.update(canvas, context));
     }
     setInterval(this.placePipes, 2000);
@@ -154,7 +156,6 @@ export class AppComponent {
       this.pipeY - this.pipeHeight / 4 - Math.random() * (this.pipeHeight / 2);
     let openingSpace = this.myCanvas.nativeElement.height / 4;
     let topPipe = {
-      img: this.pipeImageTop,
       x: this.pipeX,
       y: randomPipeY,
       width: this.pipeWidth,
@@ -165,12 +166,12 @@ export class AppComponent {
     this.pipeArray.push(topPipe);
 
     let bottomPipe = {
-      img: this.pipeImageBottom,
       x: this.pipeX,
       y: randomPipeY + this.pipeHeight + openingSpace,
       width: this.pipeWidth,
       height: this.pipeHeight,
       passed: false,
+      color: this.hue
     };
     this.pipeArray.push(bottomPipe);
   };
