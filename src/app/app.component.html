@@ -1,1 +1,7 @@
-<canvas id="myCanvas" (click)="handleClick()"></canvas>
+<div>
+  <canvas id="myCanvas" (click)="handleClick()"></canvas>
+  <div *ngIf="isGameOver" class="modal">
+    <div class="score">Score: {{score}}</div>
+    <button class="bRestart">Restart</button>
+  </div>
+</div>
