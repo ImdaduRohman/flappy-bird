@@ -24,6 +24,7 @@ export class AppComponent {
     height: this.birdHeight,
   };
   birdImg = new Image();
+  powImg = new Image();
 
   // pipes
   pipeArray: any[] = [];
@@ -68,7 +69,7 @@ export class AppComponent {
     const context = canvas.getContext('2d');
     canvas.height = this.boardHeight;
     canvas.width = this.boardWidth;
-    if (context) {
+    if (context) { 
       this.birdImg.src = '../assets/bird.png';
       this.birdImg.onload = () => {
         context.drawImage(
@@ -79,6 +80,7 @@ export class AppComponent {
           this.bird.height
         );
       };
+      this.powImg.src = '../assets/pow.png';
       requestAnimationFrame(() => this.update(canvas, context));
     }
     setInterval(this.placePipes, 2000);
@@ -140,11 +142,12 @@ export class AppComponent {
     // score
     context.fillStyle = "white";
     context.font = '20px sans-serif';
-    context?.fillText(this.score.toString(), 20, 85);
+    context?.fillText(this.score.toString(), 20, 45);
 
     //game over
     if (this.isGameOver) {
-      context?.fillText('GAME OVER!', 20 , 120);
+      context?.fillText('GAME OVER!', 20 , 75);
+      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y, this.birdWidth*1.5, this.birdHeight*1.5);
     }
   };
 
