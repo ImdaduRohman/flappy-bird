@@ -8,11 +8,20 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 export class AppComponent {
   title = 'fb';
 
-  // Canvas
+  constructor() {
+    this.placePipes = this.placePipes.bind(this);
+    this.moveBird = this.moveBird.bind(this);
+  };
+
+  ngOnInit(): void {
+    this.createCanvas();
+  };
+
+  // canvas
   boardWidth = 360;
   boardHeight = 640;
 
-  // Bird
+  // bird
   birdWidth = 45;
   birdHeight = 42;
   birdX = this.boardWidth / 8;
@@ -28,27 +37,18 @@ export class AppComponent {
 
   // pipes
   pipeArray: any[] = [];
-  pipeWidth = 64;
+  pipeWidth = 100;
   pipeHeight = 512;
   pipeX = this.boardWidth;
   pipeY = 0;
   hue = 0;
 
-  pipeImageTop = new Image();
-  pipeImageBottom = new Image();
-
   // physics
-  velocityX = -2;
+  velocityX = -10;
   velocityY = 0;
   gravity = 0.4;
   isGameOver = false;
   score = 0;
-
-  @ViewChild('myCanvas', { static: true }) myCanvas!: ElementRef;
-  constructor() {
-    this.placePipes = this.placePipes.bind(this);
-    this.moveBird = this.moveBird.bind(this);
-  };
 
   @HostListener('document:keydown', ['$event'])
   keyEventDown(event: KeyboardEvent) {
@@ -65,10 +65,10 @@ export class AppComponent {
   }
 
   createCanvas() {
-    const canvas: HTMLCanvasElement = this.myCanvas.nativeElement;
-    const context = canvas.getContext('2d');
+    const canvas: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
     canvas.height = this.boardHeight;
     canvas.width = this.boardWidth;
+    const context = canvas.getContext('2d');
     if (context) { 
       this.birdImg.src = '../assets/bird.png';
       this.birdImg.onload = () => {
@@ -83,18 +83,15 @@ export class AppComponent {
       this.powImg.src = '../assets/pow.png';
       requestAnimationFrame(() => this.update(canvas, context));
     }
-    setInterval(this.placePipes, 2000);
+    setInterval(this.placePipes, 1500);
   };
 
-  ngOnInit(): void {
-    this.createCanvas();
-  };
-
-  update(canvas: any, context: any) {
+  update(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     requestAnimationFrame(() => this.update(canvas, context));
     if (this.isGameOver) {
       return;
     }
+    
     // clear drawing
     context?.clearRect(
       0,
@@ -102,6 +99,19 @@ export class AppComponent {
       canvas.width,
       canvas.height
     );
+
+    //background
+    for(let i = 0; i < 3; i++){
+      for(let j = 0; j < 3; j++){
+        var x = Math.floor(Math.random() * canvas.width);
+        var y = Math.floor(Math.random() * canvas.height);
+        var r = Math.floor( Math.random() * (30 - 5) + 5 );
+        context.beginPath();
+        context.strokeStyle = 'hsla(' + this.hue+3 + ', 100%, 50%)';
+        context.arc(x, y, r, 0, 2*Math.PI);
+        context.stroke();
+      }
+    };
 
     // bird
     this.velocityY += this.gravity;
@@ -114,17 +124,15 @@ export class AppComponent {
       this.bird.height
     ); 
 
-    if (this.bird.y > this.myCanvas.nativeElement.height) {
+    if (this.bird.y > this.boardHeight) {
       this.isGameOver = true;
     };
+
     for (let i = 0; i < this.pipeArray.length; i++) {
-      this.hue++
       let pipe = this.pipeArray[i];
       pipe.x += this.velocityX;
-      let color = 'hsla(' + this.hue + ', 100%, 50%, 10)'
-      context.fillStyle = color;
+      context.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 10)';
       context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height)
-
       if (!pipe.passed && this.bird.x > pipe.x + pipe.width) {
         this.score += 0.5;
         pipe.passed = true;
@@ -133,6 +141,7 @@ export class AppComponent {
         this.isGameOver = true;
       }
     };
+    this.hue++
 
     // clear the pipe
     while (this.pipeArray.length > 0 && this.pipeArray[0].x < -this.pipeWidth) {
@@ -147,7 +156,7 @@ export class AppComponent {
     //game over
     if (this.isGameOver) {
       context?.fillText('GAME OVER!', 20 , 75);
-      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y, this.birdWidth*1.5, this.birdHeight*1.5);
+      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*1.5, this.birdHeight*1.5);
     }
   };
 
@@ -157,7 +166,7 @@ export class AppComponent {
     }
     let randomPipeY =
       this.pipeY - this.pipeHeight / 4 - Math.random() * (this.pipeHeight / 2);
-    let openingSpace = this.myCanvas.nativeElement.height / 4;
+    let openingSpace = this.boardHeight / 4;
     let topPipe = {
       x: this.pipeX,
       y: randomPipeY,
@@ -189,12 +198,15 @@ export class AppComponent {
     }
   };
 
-  detectCollision(a: any, b: any) {
+  detectCollision(
+    bird: {x: number, width: number, y: number ,height: number}, 
+    pipe: {x: number, width: number, y: number, height: number}
+  ) {
     return (
-      a.x < b.x + b.width &&
-      a.x + a.width > b.x &&
-      a.y < b.y + b.height &&
-      a.y + a.height > b.y
+      bird.x < pipe.x + pipe.width &&
+      bird.x + bird.width > pipe.x &&
+      bird.y < pipe.y + pipe.height &&
+      bird.y + bird.height > pipe.y
     );
   };
 }
