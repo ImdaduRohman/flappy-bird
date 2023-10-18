@@ -15,5 +15,22 @@
       <button class="bLevel" (click)="handleMedium()">Medium</button>
       <button class="bLevel" (click)="handleHard()">Hard</button>
     </div>
+    <div class="button-container">
+      <div class="topScore">
+        <div>TOP SCORE</div>
+        <hr>
+        <div class="scoreLevel">{{topScore.beginner}}</div>
+      </div>
+      <div class="topScore">
+        <div>TOP SCORE</div>
+        <hr>
+        <div class="scoreLevel">{{topScore.medium}}</div>
+      </div>
+      <div class="topScore">
+        <div>TOP SCORE</div>
+        <hr>
+        <div class="scoreLevel">{{topScore.hard}}</div>
+      </div>
+    </div>
   </div>
 </div>

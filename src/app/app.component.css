@@ -108,6 +108,22 @@
   gap: 5px;
 }
 
+.topScore {
+  width: 76px;
+  margin-top: 4px;
+  text-align: center;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 2px;
+  border-radius: 6px;
+  background: white;
+}
+
+.scoreLevel {
+  font-size: 24px;
+}
+
 .bLevel {
   background: black;
   border: 1px solid black;

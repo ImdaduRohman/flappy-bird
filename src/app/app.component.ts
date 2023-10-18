@@ -49,6 +49,7 @@ export class AppComponent {
   gravity = 0.4;
   isGameOver = false;
   score = 0;
+  topScore = { beginner: 0, medium: 0, hard: 0 };
 
   //modal
   level = 'BEGINER';
@@ -104,6 +105,17 @@ export class AppComponent {
       requestAnimationFrame(() => this.update(canvas, context));
     }
     setInterval(this.placePipes, 1500);
+    const ls =localStorage.getItem('topScore');
+    if(ls) {
+      const value = JSON.parse(ls);
+      if(value) {
+        this.topScore = value;
+      }
+    } else {
+      localStorage.setItem('topScore', JSON.stringify(
+        { 'beginner': 0, 'medium': 0, 'hard': 0 }
+      ));
+    }
   };
 
   update(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
@@ -152,10 +164,28 @@ export class AppComponent {
       let pipe = this.pipeArray[i];
       pipe.x += this.velocityX;
       context.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 10)';
-      context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height)
+      context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height);
+      let retrievedTopcore = (localStorage.getItem('topScore'));
       if (!pipe.passed && this.bird.x > pipe.x + pipe.width) {
         this.score += 0.5;
         pipe.passed = true;
+        if(retrievedTopcore){
+          const beginner = JSON.parse(retrievedTopcore).beginner;
+          const medium = JSON.parse(retrievedTopcore).medium;
+          const hard = JSON.parse(retrievedTopcore).hard;
+          if(this.score > beginner && this.level === 'BEGINER') {
+            this.topScore = {...this.topScore, 'beginner': this.score};
+            localStorage.setItem('topScore', JSON.stringify(this.topScore));
+          }
+          if(this.score > medium && this.level === 'MEDIUM') {
+            this.topScore = {...this.topScore, 'medium': this.score};
+            localStorage.setItem('topScore', JSON.stringify(this.topScore));
+          }
+          if(this.score > hard && this.level === 'HARD') {
+            this.topScore = {...this.topScore, 'hard': this.score};
+            localStorage.setItem('topScore', JSON.stringify(this.topScore));
+          }
+        }
       }
       if (this.detectCollision(this.bird, pipe)) {
         this.isGameOver = true;
