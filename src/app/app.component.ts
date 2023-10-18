@@ -50,6 +50,26 @@ export class AppComponent {
   isGameOver = false;
   score = 0;
 
+  //modal
+  level = 'BEGINER';
+  handleBeginer() {
+    this.velocityX = -4;
+    this.level = 'BEGINER';
+    this.moveBird();
+  };
+
+  handleMedium() {
+    this.velocityX = -6;
+    this.level = 'MEDIUM';
+    this.moveBird();
+  };
+
+  handleHard() {
+    this.velocityX = -10;
+    this.level = 'HARD';
+    this.moveBird();
+  };
+
   @HostListener('document:keydown', ['$event'])
   keyEventDown(event: KeyboardEvent) {
     if (
@@ -62,7 +82,7 @@ export class AppComponent {
 
   handleClick() {
     this.moveBird();
-  }
+  };
 
   createCanvas() {
     const canvas: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
@@ -149,15 +169,16 @@ export class AppComponent {
     }
 
     // score
-    context.fillStyle = "white";
-    context.font = '20px sans-serif';
-    context?.fillText(this.score.toString(), 20, 45);
+    {if(!this.isGameOver) {
+      context.fillStyle = "white";
+      context.font = '20px sans-serif';
+      context?.fillText(this.score.toString(), 20, 45);
+    }};
 
     //game over
     if (this.isGameOver) {
-      context?.fillText('GAME OVER!', 20 , 75);
       context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*1.5, this.birdHeight*1.5);
-    }
+    };
   };
 
   placePipes() {

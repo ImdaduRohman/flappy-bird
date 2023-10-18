@@ -28,8 +28,9 @@
 
 .bRestart {
   display: block;
+  font-size: 20px;
   margin: 20px auto;
-  padding: 0.6em 2em;
+  padding: 16px 14px;
   border: none;
   outline: none;
   color: rgb(255, 255, 255);
@@ -99,7 +100,6 @@
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .button-container {
@@ -108,7 +108,7 @@
   gap: 5px;
 }
 
-.bBeginar {
+.bLevel {
   background: black;
   border: 1px solid black;
   border-radius: 6px;
@@ -134,13 +134,13 @@
   vertical-align: middle;
 }
 
-.bBeginar:hover,
-.bBeginar:active {
+.bLevel:hover,
+.bLevel:active {
   background-color: initial;
   background-position: 0 0;
   color: black;
 }
 
-.bBeginar:active {
+.bLevel:active {
   opacity: 0.5;
 }

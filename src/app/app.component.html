@@ -1,13 +1,19 @@
 <div>
+  <!-- canvas -->
   <canvas id="myCanvas" (click)="handleClick()"></canvas>
+
+  <!-- modal -->
   <div *ngIf="isGameOver" class="modal">
+    <div class="score">GAME OVER!</div>
     <div class="score">SCORE: {{score}}</div>
     <button class="bRestart" (click)="handleClick()">Restart</button>
     <div class="levelText">LEVEL</div>
+    <div class="levelText">{{level}}</div>
+    <br>
     <div class="button-container">
-      <button class="bBeginar">Beginer</button>
-      <button class="bBeginar">Medium</button>
-      <button class="bBeginar">Hard</button>
+      <button class="bLevel" (click)="handleBeginer()">Beginer</button>
+      <button class="bLevel" (click)="handleMedium()">Medium</button>
+      <button class="bLevel" (click)="handleHard()">Hard</button>
     </div>
   </div>
 </div>
