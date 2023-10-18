@@ -14,7 +14,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
+  min-width: 200px;
   background: rgba(242, 252, 245, 0.7);
   padding: 20px;
   border-radius: 20px;
@@ -93,4 +93,54 @@
   left: 0;
   top: 0;
   border-radius: 10px;
+}
+
+.levelText {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.bBeginar {
+  background: black;
+  border: 1px solid black;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  min-height: 40px;
+  min-width: 80px;
+  outline: 0;
+  padding: 8px 10px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.bBeginar:hover,
+.bBeginar:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: black;
+}
+
+.bBeginar:active {
+  opacity: 0.5;
 }

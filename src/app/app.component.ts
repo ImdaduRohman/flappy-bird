@@ -44,7 +44,7 @@ export class AppComponent {
   hue = 0;
 
   // physics
-  velocityX = -10;
+  velocityX = -4;
   velocityY = 0;
   gravity = 0.4;
   isGameOver = false;
