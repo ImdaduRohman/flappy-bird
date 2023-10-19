@@ -160,3 +160,9 @@
 .bLevel:active {
   opacity: 0.5;
 }
+
+.author {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
