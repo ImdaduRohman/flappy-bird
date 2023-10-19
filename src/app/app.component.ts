@@ -155,6 +155,8 @@ export class AppComponent {
     ); 
 
     if (this.bird.y + this.bird.height > this.boardHeight) {
+      const hit = new Audio('../assets/hit.mp3')
+      hit.play();
       this.isGameOver = true;
     };
 
@@ -167,6 +169,8 @@ export class AppComponent {
       if (!pipe.passed && this.bird.x > pipe.x + pipe.width) {
         this.score += 0.5;
         pipe.passed = true;
+        const point = new Audio('../assets/point.mp3')
+        point.play();
         if(retrievedTopcore){
           const beginner = JSON.parse(retrievedTopcore).beginner;
           const medium = JSON.parse(retrievedTopcore).medium;
@@ -186,6 +190,8 @@ export class AppComponent {
         }
       }
       if (this.detectCollision(this.bird, pipe)) {
+        const hit = new Audio('../assets/hit.mp3')
+        hit.play();  
         this.isGameOver = true;
       }
     };
@@ -238,6 +244,8 @@ export class AppComponent {
   };
 
   moveBird() {
+    const wing = new Audio('../assets/wing.mp3')
+    wing.play();
     this.velocityY = -6;
     if (this.isGameOver) {
       this.bird.y = this.birdY;
