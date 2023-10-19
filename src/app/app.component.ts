@@ -45,7 +45,7 @@ export class AppComponent {
 
   velocityX = -4;
   velocityY = 0;
-  gravity = 0.5;
+  gravity = 0.4;
   isGameOver = false;
   score = 0;
   
