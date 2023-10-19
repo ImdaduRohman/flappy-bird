@@ -205,7 +205,7 @@ export class AppComponent {
 
     //game over
     if (this.isGameOver) {
-      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*5, this.birdHeight*1.5);
+      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*1.5, this.birdHeight*1.5);
     };
   };
 
