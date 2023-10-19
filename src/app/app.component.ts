@@ -43,15 +43,14 @@ export class AppComponent {
   pipeY = 0;
   hue = 0;
 
-  // physics
   velocityX = -4;
   velocityY = 0;
   gravity = 0.4;
   isGameOver = false;
   score = 0;
-  topScore = { beginner: 0, medium: 0, hard: 0 };
-
+  
   //modal
+  topScore = { beginner: 0, medium: 0, hard: 0 };
   level = 'BEGINER';
   handleBeginer() {
     this.velocityX = -4;
@@ -87,8 +86,8 @@ export class AppComponent {
 
   createCanvas() {
     const canvas: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
-    canvas.height = this.boardHeight;
     canvas.width = this.boardWidth;
+    canvas.height = this.boardHeight;
     const context = canvas.getContext('2d');
     if (context) { 
       this.birdImg.src = '../assets/bird.png';
@@ -105,7 +104,7 @@ export class AppComponent {
       requestAnimationFrame(() => this.update(canvas, context));
     }
     setInterval(this.placePipes, 1500);
-    const ls =localStorage.getItem('topScore');
+    const ls = localStorage.getItem('topScore');
     if(ls) {
       const value = JSON.parse(ls);
       if(value) {
@@ -123,8 +122,7 @@ export class AppComponent {
     if (this.isGameOver) {
       return;
     }
-    
-    // clear drawing
+
     context?.clearRect(
       0,
       0,
@@ -156,14 +154,14 @@ export class AppComponent {
       this.bird.height
     ); 
 
-    if (this.bird.y > this.boardHeight) {
+    if (this.bird.y + this.bird.height > this.boardHeight) {
       this.isGameOver = true;
     };
 
     for (let i = 0; i < this.pipeArray.length; i++) {
       let pipe = this.pipeArray[i];
       pipe.x += this.velocityX;
-      context.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 10)';
+      context.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
       context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height);
       let retrievedTopcore = (localStorage.getItem('topScore'));
       if (!pipe.passed && this.bird.x > pipe.x + pipe.width) {
@@ -207,7 +205,7 @@ export class AppComponent {
 
     //game over
     if (this.isGameOver) {
-      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*1.5, this.birdHeight*1.5);
+      context?.drawImage(this.powImg, this.bird.x + 15, this.bird.y-3, this.birdWidth*5, this.birdHeight*1.5);
     };
   };
 
